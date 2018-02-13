@@ -1,0 +1,80 @@
+/*  Name: Bradley Smith
+	Course: CSC235.03
+	Homework: #1
+*/
+
+BODY {background-color:#ABACEF;}
+/*This is a custom style for the title bar.*/
+#TitleBar{
+	text-align:center; filter: drop-shadow(0px 0px 4px black);
+	margin-bottom: 20px;
+	font-family: century, georgia, bell MT ; font-weight: 900;
+	font-size:36pt; color: #050DFF; text-outline: 2px 2px #050DFF;
+}
+
+/*This is a custom style for the blue table's TDs.*/
+#td1 {Border-top: 3px groove #5759df;
+	Border-bottom: 5px groove #5759df;
+    color: #131444, 
+	margin: 2px; padding: 5px; 
+	background-color: #010065; 
+	text-align: right; 
+	text-decoration: underline; color: white; font-family: century;
+}
+
+/*This is a custom style for the Select button.*/
+BOX { 
+	Background-color: #cdace3;
+	Color: blue;
+	Border: 4px solid #02008c;
+	padding: 1px 8px;
+	margin: 562px;
+	font-size: 16pt;
+	font-family: Century;
+}
+
+/*This is a custom style for the blue table.*/
+#BlueTable{
+	Border: 6px dotted #00004e;
+	zoom: 93%;
+	margin-left: 10px; 
+	Position: absolute; 
+	left:0px; top:105px; z-index= 0;	
+}
+
+/*This is a custom style for the witch picture.*/
+#Witch{
+	Border-top: 3px groove grey; 
+	Border-bottom: 5px groove grey;
+	padding: 4px; background-color: #02008C;
+}
+
+/*This is a custom style for the iFrame.*/
+#Frame{
+	Position: absolute; right: 0px; bottom: 50px; 
+	width: 83%; height: 145px;
+}
+
+/*This is a custom style for the bottom bar.*/
+#Bot0{
+	height: 50px; width: 100%; position: absolute; bottom: 0;
+	left: 0; right: 0; z-index =0; 
+	background: -webkit-linear-gradient(#ABACED, #000000);
+	background-color:#ABACEF;
+}
+
+/*This is a custom style for the table in the bottom bar.*/
+#Bot1{
+	height: 50px; position: absolute; bottom: 0;
+	z-index=1; left: 40%; right: 0; 
+	background: -webkit-linear-gradient(#ABACED, #000000);
+	background-color:#ABACEF;
+}
+
+/*This is a custom style for the text in the bottom bar.*/
+#BotText{
+	color: white; 
+	text-decoration: underline;
+	font-size: 11pt; 
+	font-family: Century;
+}

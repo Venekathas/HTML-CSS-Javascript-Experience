@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head><title>Make a Game</title>
+<style type ="text/css">
+<!--
+td {width: 30px;
+	height: 30px;}
+
+td.A {background-color: #efabab;}
+-->
+</style>
+</head>
+<body>
+
+<script language="JavaScript">
+<!--
+// Bradley Smith
+// 11/19/2017
+// CSC 235
+// Prof. Podnar
+// Homework 2
+
+
+var a = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0); //An empty array to hold chip placement values.
+chipsdown = 0; //Tracks how many chips are put down.
+chipsup = 0;   //Tracks how many chips are picked up.
+rollcount = 0; //Tracks how many rolls have occurred.
+
+//This function lays the chips on the table. It also displays the status of
+//their total and when to start the game.
+
+//@param c The number space that was clicked.
+//var myTag The TD that was clicked.
+//var Stat The Status TD.
+function count(c)
+{
+	//If not all of the chips are down, place a chip and tell the user how many
+	//chips are left. If they are all used, prevent the user from placing more.
+	if(chipsdown <10){
+		chipsdown++;
+		a[c]++;
+		var myTag = document.getElementById("s"+c);
+		myTag.innerHTML = a[c];
+		var Stat = document.getElementById("Status");
+		Stat.innerHTML = "Status: There are " + (10-chipsdown) +" chips left.";
+		if(chipsdown == 10){
+			Stat.innerHTML = "Status: All the chips are set. Ready to roll!";
+			}
+	}
+	else{
+		if(chipsdown == 10 && chipsup < 10){
+			var Stat = document.getElementById("Status");
+			Stat.innerHTML = "Status: There are no more chips left. Start rolling!";
+			}
+		}
+		
+}
+
+//This function rolls the dice, checks for a match and takes a chip off of the table.
+//It changes the status occordingly to whether there is a match or not and displays the
+//roll total. It also prevents the user from rolling before the chips are down.
+//var Stat, td1, td2, rc, myTag, The Status TD, first dice box, second dice box,
+//the rollcount box, and the chip space.
+//var r1, r2, c, The first die result, the second die result, the total dice count.
+
+function roll()
+{
+	var Stat = document.getElementById("Status");
+	if(chipsdown < 10){
+		Stat.innerHTML = "Status: There are still chips left!";
+		}
+	if(chipsup == 10){
+		Stat.innerHTML = "Status: All the chips are collected. Score: "+rollcount+"";
+		}
+	if(chipsup < 10 && chipsdown == 10){
+		r1=Math.floor(Math.random()*6) +1;
+		r2=Math.floor(Math.random()*6) +1;
+		var c = r1+r2
+		rollcount++;
+		var td1 = document.getElementById("d1");
+		var td2 = document.getElementById("d2");
+		td1.innerHTML = "<img src='dice"+r1+".gif'>";
+		td2.innerHTML = "<img src='dice"+r2+".gif'>";
+		var rc = document.getElementById("rc");
+		rc.innerHTML = "Roll Count: "+rollcount;
+		var myTag = document.getElementById("s"+c);
+		if(a[c] >=1){
+			Stat.innerHTML = "Status: You rolled a "+c+"! That's a match!";
+			a[c]--;
+			chipsup++;
+			if(a[c] >0){
+				myTag.innerHTML = a[c];
+				}
+			else{
+				myTag.innerHTML = "";
+				}
+			}
+		else{
+			Stat.innerHTML = "Status: You rolled a "+c+"! That's not a match.";
+			}
+		}
+}
+
+//This function resets the game and sets the highscore. 
+//var highscore, hs, The highscore of the game, the TD to display the high score.
+//var a A new array to reset the old array.
+//chipsdown, rollcount, chipsup, Values to reset.
+//var td1, td2, Stat, rcount, myTag, All boxes to set to default states.
+
+function reset()
+{
+	//If the game finishes, sets the highscore.
+	if(chipsup == 10){
+		if(typeof highscore == 'undefined'){
+			highscore = rollcount;
+			}
+		else{
+			if(rollcount<highscore){
+				highscore = rollcount;
+				}
+			}
+		var hs = document.getElementById("hs");
+		hs.innerHTML = "High Score: " +highscore+"";
+		}
+		
+	//All of these reset the values and their display boxes.
+	a = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0);
+	chipsdown = 0;	
+	rollcount = 0;
+	chipsup = 0;
+	var td1 = document.getElementById("d1");
+	var td2 = document.getElementById("d2");
+	td1.innerHTML = "";
+	td2.innerHTML = "";
+	var Stat = document.getElementById("Status");
+	Stat.innerHTML = "Status: Welcome back!";
+	var rcount = document.getElementById("rc");
+	rcount.innerHTML = "";
+	
+	for(i=2; i<13; i++){
+	var myTag = document.getElementById("s"+i);
+	myTag.innerHTML = "";
+	}
+}
+	
+
+	
+//-->
+</script>
+
+<h1> CSC 235 Game </h1>
+<table border = 2>
+<tr><td colspan = 2 id="hs"> </td></tr>
+<tr>
+<td colspan = 5 id="rc"></td>
+
+<td colspan = 2 id="d1"></td>
+<td colspan = 2 id="d2"></td>
+<td colspan=2> <button OnClick="roll()"> Roll Dice </button></td>
+</tr>
+
+<tr>
+<td class ="A" id="s2" onClick="count(2)"> </td>
+<td> </td>
+<td class ="A" id="s4" onClick="count(4)"> </td>
+<td> </td>
+<td class ="A" id="s6" onClick="count(6)"> </td>
+<td> </td>
+<td class ="A" id="s8" onClick="count(8)"> </td>
+<td> </td>
+<td class ="A" id="s10" onClick="count(10)"> </td>
+<td> </td>
+<td class ="A" id="s12" onClick="count(12)"> </td>
+</tr>
+
+
+<tr>
+<td>2</td>
+<td> </td>
+<td>4</td>
+<td> </td>
+<td>6</td>
+<td> </td>
+<td>8</td>
+<td> </td>
+<td>10</td>
+<td> </td>
+<td>12</td>
+</tr>
+
+
+<tr>
+<td> </td>
+<td class ="A" id="s3" onClick="count(3)"> </td>
+<td> </td>
+<td class ="A" id="s5" onClick="count(5)"> </td>
+<td> </td>
+<td class ="A" id="s7" onClick="count(7)"> </td>
+<td> </td>
+<td class ="A" id="s9" onClick="count(9)"> </td>
+<td> </td>
+<td class ="A" id="s11" onClick="count(11)"> </td>
+<td> </td>
+</tr>
+
+<tr>
+<td> </td>
+<td>3</td>
+<td> </td>
+<td>5</td>
+<td> </td>
+<td>7</td>
+<td> </td>
+<td>9</td>
+<td> </td>
+<td>11</td>
+<td> </td>
+
+</tr>
+
+
+
+</table>
+
+<table border = 3>
+<tr> 
+<td style="width:330px" id="Status">Status: Welcome! Set 10 chips across the red squares, then roll the dice. Lowest score wins!</td>
+<td><button onClick="reset()"> New Game</button></td>
+</tr>
+</table>
+</body>
+</html>
