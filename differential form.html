@@ -1,0 +1,312 @@
+<html>
+<head><title>Differential Form</title></head>
+<body>
+<script language="Javascript">
+<!--
+	
+function p(form)
+{
+	var valid = validateForm(form);
+	if (valid)
+	{
+		var message = "Form Recieved! Here are your results:\nName:" + form.T1.value ;
+		var i=0;
+		while(i < 3 && !form.agency[i].checked) 
+			{i++;}
+		if(i<3)
+			{message +="\nAgency: "+ form.agency[i].value;}
+	
+		totalDiff = 0
+		for(var i=1; i<=3; i++)
+		{	
+			if(document.getElementsByName("dif"+i)[0].checked)
+			{
+				if(i==1)
+				{
+					totalDiff += 25;
+					message += "\nDifferential: Long Distance $25";
+				}
+				if(i==2)
+				{
+					totalDiff += 50;
+					message += "\nDifferential: Weekend $50";
+				}
+				if(i==3)
+				{
+					totalDiff += 75;
+					message += "\nDifferential: Overtime $75";
+				}
+			}
+		}
+		message += "\nDifferential Total: $" + totalDiff+".";
+		for(var i=1;i<form.towns.options.length;i++)
+		{
+		
+			if(form.towns.options[i].selected)
+			{
+				message += "\nTown: " + form.towns.options[i].value;
+			}
+		
+		}
+		message += "\nDate of Service: ";
+		for(var i=1;i<form.month.options.length;i++)
+		{
+			if(form.month.options[i].selected)
+			{
+				message +=form.month.options[i].value +"/";
+			}
+			
+			
+		}
+		for(var i=1;i<form.day.options.length;i++)
+		{
+			if(form.day.options[i].selected)
+			{
+				message+=form.day.options[i].value +"/";
+			}
+		}
+		for(var i=1;i<form.year.options.length;i++)
+		{
+			if(form.year.options[i].selected)
+			{
+				message+=form.year.options[i].value;
+			}
+		}
+
+	form.TA1.value = message;
+	download(message, message+'.txt', 'text/plain');
+	
+	
+	
+	}
+}
+
+	
+	
+function validateForm(form){
+	valid = true;
+	var x = form.T1.value;
+	while(valid)
+	{
+		if (x =="" || x=="Type Here") 
+		{
+			alert("Name must be filled out");
+			return false;
+		}
+		var x = form.agency.value;
+		if( x != "Back to Health" && x !="Husky Care" && x != "Aetna")
+		{
+			alert("Please pick an agency");
+			return false;
+		}
+		selection = false;
+		for(var i=1;i<form.towns.options.length;i++)
+		{
+			if(form.towns.options[i].selected)
+			{
+			selection = true;
+			break;
+			}
+		}
+		if(!selection)
+		{
+			alert("Please pick a town");
+			return false;
+		}
+		selection = false;
+		for(var i=1;i<form.month.options.length;i++)
+		{
+			if(form.month.options[i].selected)
+			{
+			selection = true;
+			break;
+			}
+		}
+		if(!selection)
+		{
+			alert("Please pick a month");
+			return false;
+		}
+		selection = false;
+		for(var i=1;i<form.day.options.length;i++)
+		{
+			if(form.day.options[i].selected)
+			{
+			selection = true;
+			break;
+			}
+		}
+		if(!selection)
+		{
+			alert("Please pick a day");
+			return false;
+		}
+		selection = false;
+		for(var i=1;i<form.year.options.length;i++)
+		{
+			if(form.year.options[i].selected)
+			{
+			selection = true;
+			break;
+			}
+		}
+		if(!selection)
+		{
+			alert("Please pick a year");
+			return false;
+		}
+		
+	return valid;
+		}
+	
+	}
+	
+function download(strData, strFileName, strMimeType) { //Borrowed code for practice. 
+    var D = document,
+        A = arguments,
+        a = D.createElement("a"),
+        d = A[0],
+        n = A[1],
+        t = A[2] || "text/plain";
+
+    //build download link:
+    a.href = "data:" + strMimeType + "charset=utf-8," + escape(strData);
+
+
+    if (window.MSBlobBuilder) { // IE10
+        var bb = new MSBlobBuilder();
+        bb.append(strData);
+        return navigator.msSaveBlob(bb, strFileName);
+    } /* end if(window.MSBlobBuilder) */
+
+
+
+    if ('download' in a) { //FF20, CH19
+        a.setAttribute("download", n);
+        a.innerHTML = "downloading...";
+        D.body.appendChild(a);
+        setTimeout(function() {
+            var e = D.createEvent("MouseEvents");
+            e.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
+            D.body.removeChild(a);
+        }, 66);
+        return true;
+    }; /* end if('download' in a) */
+
+
+
+    //do iframe dataURL download: (older W3)
+    var f = D.createElement("iframe");
+    D.body.appendChild(f);
+    f.src = "data:" + (A[2] ? A[2] : "application/octet-stream") + (window.btoa ? ";base64" : "") + "," + (window.btoa ? window.btoa : escape)(strData);
+    setTimeout(function() {
+        D.body.removeChild(f);
+    }, 333);
+    return true;
+} //End Borrowed code.
+	
+
+
+
+//-->
+</script>
+
+<form name = "F1">
+
+<br>Enter Name</br><input type= "text" name = "T1" value = "Type Here">
+<hr>
+<br>Agency</br>
+<input type="radio" name="agency" value="Back to Health">Back to Health
+<input type="radio" name="agency" value="Husky Care">Husky Care
+<input type="radio" name="agency" value="Aetna">Aetna
+<hr>
+<br>Reason for Differential</br>
+<input type="checkbox" name="dif1" value="25">Long Distance
+<input type="checkbox" name="dif2" value="50">Weekend
+<input type="checkbox" name="dif3" value="75">Overtime
+</hr>
+<hr>
+<br>Town</br>
+<select name="towns">
+<option value="">Please Select Town
+<option value="Branford">Branford
+<option value="Stamford">Stamford
+<option value="Hamden">Hamden
+</select>
+<hr>
+<br>Date</br>
+<select name="month">
+<option value="">Month
+<option value="01">January
+<option value="02">February
+<option value="03">March
+<option value="04">April
+<option value="05">May
+<option value="06">June
+<option value="07">July
+<option value="08">August
+<option value="09">September
+<option value="10">October
+<option value="11">November
+<option value="12">December
+
+</select>
+<select name="day">
+<option value="">Day
+<option value="01">01
+<option value="02">02
+<option value="03">03
+<option value="04">04
+<option value="05">05
+<option value="06">06
+<option value="07">07
+<option value="08">08
+<option value="09">09
+<option value="10">10
+<option value="11">11
+<option value="12">12
+<option value="13">13
+<option value="14">14
+<option value="15">15
+<option value="16">16
+<option value="17">17
+<option value="18">18
+<option value="19">19
+<option value="20">20
+<option value="21">21
+<option value="22">22
+<option value="23">23
+<option value="24">24
+<option value="25">25
+<option value="26">26
+<option value="27">27
+<option value="28">28
+<option value="29">29
+<option value="30">30
+<option value="31">31
+
+</select>
+<select name="year">
+<option value="">Year
+<option value="2017">2017
+<option value="2018">2018
+<option value="2019">2019
+</select>
+<hr>
+<input type="Button" value="Submit Form" onClick="p(this.form)">
+<hr>
+<br>Form Results</br>
+<textarea name="TA1" rows=10 cols= 50>Results </textarea>
+
+
+
+
+
+
+</form>
+
+
+
+</body>
+</html>
